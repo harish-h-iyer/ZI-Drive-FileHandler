@@ -1,0 +1,21 @@
+# APP_CONFIG
+PORT: 5002
+
+# DB_CONFIG
+DB_HOST: "localhost"
+DB_PORT: 27017
+DB_NAME: "zidrive"
+DB_USERNAME: "mongoadmin"
+DB_PASS: "Ph!345EK+"
+
+#JWT Token
+SECRET_KEY: "D#i!S%At0M!Q"
+EXPIRES_IN: "1d"
+
+SERVER_IP: "localhost"
+ENABLE_DOC: true
+
+#Attachments Directory
+DOWNLOAD_DIRECTORY :  "../../../home/dis/Export/"
+UPLOAD_DIRECTORY: "../../../home/dis/Import/"
+
