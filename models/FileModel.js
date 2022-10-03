@@ -1,22 +1,15 @@
 const mongoose = require("mongoose");
 
-const folderSchema = new mongoose.Schema({
+const fileSchema = new mongoose.Schema({
     owner: {
         type: String
     },
-    folderName : {
+    fileName : {
         type: String,
         required: true
     },
-    description : {
+    filePath : {
         type: String
-    },
-    folderPath : {
-        type: String
-    },
-    isRoot : {
-        type: Boolean,
-        default: false
     },
     access : {
         type: String
@@ -29,4 +22,4 @@ const folderSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("folders", folderSchema, "folders");
+module.exports = mongoose.model("files", fileSchema, "files");

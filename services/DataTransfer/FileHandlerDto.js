@@ -15,3 +15,38 @@ exports.generateTokenObject = function(data, token) {
         created_at: new Date()
     }
 }
+
+exports.savefileObject = function(owner, filePath, fileName) {
+    return {
+        owner: owner,
+        fileName: fileName,
+        filePath: filePath,
+        access: owner,
+        created_at: new Date()
+    }
+}
+
+exports.generateContentObject = function(data) {
+    var result = [];
+
+    data.forEach(obj => {
+        if(obj.folderName){
+            var resultObj = {
+                nameOfFolderOrFile: obj.folderName,
+                owner: obj.owner,
+                description: obj.description,
+                type: "Folder"
+            }
+        }else{
+            var resultObj = {
+                nameOfFolderOrFile: obj.fileName,
+                owner: obj.owner,
+                description: "",
+                type: "File"
+            }
+        }
+
+        result.push(resultObj);
+    })
+    return result;
+}

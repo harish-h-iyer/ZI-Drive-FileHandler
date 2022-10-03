@@ -3,6 +3,8 @@ var config = require("config");
 const folderDto =  require("../DataTransfer/FolderDto");
 const fse = require("fs-extra");
 const { response } = require("../../routes/routersManagement");
+const fileHandlerDto = require("../DataTransfer/FileHandlerDto");
+const fileModel = require("../../models/FileModel");
 
 exports.getFilesAndFolderList = function(req, res){
     var folderPath = req.query.folderPath;
@@ -20,9 +22,26 @@ exports.getFilesAndFolderList = function(req, res){
                 message: "No Content in given path"
             })
         }else{
-            return res.status(200).json({
-                payload: foundFolders,
-                message: "Success"
+
+            var folderResult = fileHandlerDto.generateContentObject(foundFolders);
+            var queryForFile = {
+                filePath: folderPath,
+                owner: email
+            }
+            fileModel.find(queryForFile, function(error, foundFiles){
+                if(error){
+
+                }else{
+                    var fileResult = fileHandlerDto.generateContentObject(foundFiles);
+
+
+                    var result = folderResult.concat(fileResult);
+                    
+                    return res.status(200).json({
+                        payload: result,
+                        message: "Success"
+                    })
+                }
             })
         }   
     });
@@ -70,4 +89,30 @@ exports.createFolder = function(req, res){
             return res.status(200).json(message);      
         }
     })
+}
+
+exports.uploadFile = function(req, res){
+    var filePath = req.filePath;
+    var filesObj = req.files;
+    var arrayOfFileObj = [];
+    var email =req.user.email;
+
+    filesObj.forEach(file => {
+        var fileObj = fileHandlerDto.savefileObject(email, filePath, file.filename)
+        
+        var filesObject = new fileModel(fileObj);
+
+        filesObject.save(filesObject, function(error, result){
+            if(error){
+                return res.status(500).json({
+                    message: "Internal Server Error"
+                })
+            }
+        })
+    })
+
+    return res.status(200).json({
+        message: "Files Uploaded Successfully"
+    })
+
 }

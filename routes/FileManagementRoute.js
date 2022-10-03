@@ -9,8 +9,34 @@ const path = require("path");
 const config = require("config");
 const logger = require("../config/logger/logger");
 
+const storage = multer.diskStorage({
+    destination: (req, file,cb) => {
+        //cb(null, 'E:\\FileUploads');
+        var folderPath = req.headers.folderpath;
+        console.log(req);
+        var email = req.user.email;
+
+        var directoryPath = config.get("FOLDER_DIRECTORY")
+
+        directoryPath = directoryPath + email + folderPath;
+
+        req.filePath = "/" + email + folderPath;
+        
+        cb(null, directoryPath);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);    
+    }
+});
+
+const upload = multer({
+    storage: storage
+});
+
 router.get("/getFilesAndFolderList", middleWare,FileHandlerService.getFilesAndFolderList);
 
 router.post("/createFolder", middleWare,FileHandlerService.createFolder);
+
+router.post("/uploadFile",middleWare,upload.array('files'),FileHandlerService.uploadFile);
 
 module.exports = router;
