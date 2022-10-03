@@ -116,3 +116,56 @@ exports.uploadFile = function(req, res){
     })
 
 }
+
+exports.moveFiles = function(req, res){
+    var old_path =req.body.oldPath;
+    var new_path = req.body.newPath;
+
+    var email =req.user.email;
+
+    var directoryPath = config.get("FOLDER_DIRECTORY");
+
+    var src = "/" + email + old_path;
+    var dst = "/" + email + new_path;
+
+    old_path = directoryPath + "/" + email + old_path; 
+    new_path = directoryPath + "/" + email + new_path; 
+
+    fse.move(old_path, new_path, err => {
+        if (err) return console.error(err)
+        console.log('success!')
+      })
+
+    var query = {
+        "folderPath": src,
+        "owner": email
+    }
+
+    console.log(dst)
+
+    FolderModel.updateMany(query, {folderPath: dst}, function(error, response){
+        if(error){
+            return res.status(500).json({
+                message: "Internal Server Error"
+            });
+        }else{
+            var fileQuery = {
+                "filePath": src,
+                "owner": email
+            }
+        
+            fileModel.updateMany(fileQuery, {filePath: dst}, function(error, response){
+                if(error){
+                    return res.status(500).json({
+                        message: "Internal Server Error"
+                    });
+                }else{
+                    return res.status(200).json({
+                        message: "File Moved Successfully"
+                    });
+                }
+            })
+        }
+        console.log(response);
+    })
+}

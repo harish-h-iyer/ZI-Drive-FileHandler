@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
         directoryPath = directoryPath + email + folderPath;
 
         req.filePath = "/" + email + folderPath;
-        
+
         cb(null, directoryPath);
     },
     filename: (req, file, cb) => {
@@ -38,5 +38,8 @@ router.get("/getFilesAndFolderList", middleWare,FileHandlerService.getFilesAndFo
 router.post("/createFolder", middleWare,FileHandlerService.createFolder);
 
 router.post("/uploadFile",middleWare,upload.array('files'),FileHandlerService.uploadFile);
+
+router.post("/moveFiles",middleWare,FileHandlerService.moveFiles);
+
 
 module.exports = router;

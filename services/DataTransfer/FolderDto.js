@@ -9,3 +9,11 @@ exports.savefolderObject = function(owner, folderPath, folderName, req) {
         created_at: new Date()
     }
 }
+
+exports.updatedfolderObject = function(foundFolder, folderPath) {
+    
+    foundFolder.folderPath = folderPath;
+    foundFolder.update_at = new Date();
+
+    return foundFolder;
+}
