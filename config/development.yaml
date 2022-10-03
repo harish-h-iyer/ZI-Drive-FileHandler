@@ -9,7 +9,7 @@ DB_USERNAME: "mongoadmin"
 DB_PASS: "Ph!345EK+"
 
 #JWT Token
-SECRET_KEY: "D#i!S%At0M!Q"
+SECRET_KEY: "Y@wOUao90398"
 EXPIRES_IN: "1d"
 
 SERVER_IP: "localhost"
@@ -17,5 +17,5 @@ ENABLE_DOC: true
 
 #Attachments Directory
 DOWNLOAD_DIRECTORY :  "../../../home/dis/Export/"
-UPLOAD_DIRECTORY: "../../../home/dis/Import/"
+UPLOAD_DIRECTORY: "/ZI Assignment/Files"
 

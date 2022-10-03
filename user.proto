@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package userPackage;
+
+service User{
+    rpc createUser(UserItem) returns (UserItem); //unary 
+    rpc readUser(QueryParams) returns (UserItem);
+}
+
+message Text{
+    string text =1;
+}
+
+message UserItem{
+    string email = 1;
+    string firstName = 2;
+    string lastName =3;
+    string phoneNumber =4;
+    string gender =5;
+    string password =6;
+}
+
+message QueryParams{
+    string email = 1;
+}
+
+message UserItems{
+    repeated UserItem items=1;
+}
+
+message NoParams{}

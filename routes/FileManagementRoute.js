@@ -9,4 +9,6 @@ const path = require("path");
 const config = require("config");
 const logger = require("../config/logger/logger");
 
-router.get("/getFilesAndFolderList", FileHandlerService.getFilesAndFolderList);
+router.get("/getFilesAndFolderList", middleWare,FileHandlerService.getFilesAndFolderList);
+
+module.exports = router;

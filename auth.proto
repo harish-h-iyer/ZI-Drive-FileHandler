@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package authPackage;
+
+service Auth{
+    rpc login(loginParams) returns (message);  
+    rpc getToken(logoutParams) returns (message);
+    rpc logout(logoutParams) returns (message);
+}
+
+message logoutParams{
+    string token = 1;
+}
+
+message loginParams{
+    string email =1;
+    string password =2;
+}
+
+message message{
+    string message =1;
+}
+
+
+message NoParams{}
