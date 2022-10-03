@@ -11,4 +11,6 @@ const logger = require("../config/logger/logger");
 
 router.get("/getFilesAndFolderList", middleWare,FileHandlerService.getFilesAndFolderList);
 
+router.post("/createFolder", middleWare,FileHandlerService.createFolder);
+
 module.exports = router;

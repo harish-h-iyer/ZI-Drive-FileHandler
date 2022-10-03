@@ -16,6 +16,5 @@ SERVER_IP: "localhost"
 ENABLE_DOC: true
 
 #Attachments Directory
-DOWNLOAD_DIRECTORY :  "../../../home/dis/Export/"
-UPLOAD_DIRECTORY: "/ZI Assignment/Files"
+FOLDER_DIRECTORY: "/ZI Assignment/Files/"
 
