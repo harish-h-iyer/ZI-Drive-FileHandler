@@ -21,7 +21,7 @@ exports.savefileObject = function(owner, filePath, fileName) {
         owner: owner,
         fileName: fileName,
         filePath: filePath,
-        access: owner,
+        access: [owner],
         created_at: new Date()
     }
 }

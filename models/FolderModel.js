@@ -18,9 +18,9 @@ const folderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    access : {
+    access : [{
         type: String
-    },
+    }],
     created_at: {
         type: Date
     },

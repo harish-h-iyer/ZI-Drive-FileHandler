@@ -141,8 +141,6 @@ exports.moveFiles = function(req, res){
         "owner": email
     }
 
-    console.log(dst)
-
     FolderModel.updateMany(query, {folderPath: dst}, function(error, response){
         if(error){
             return res.status(500).json({
@@ -168,4 +166,61 @@ exports.moveFiles = function(req, res){
         }
         console.log(response);
     })
+}
+
+exports.changePermission = function(req, res){
+    var path = req.body.path;
+    var type = req.body.type;
+    var folderOrFileName = req.body.folderOrFileName;
+    var email = req.user.email;
+    var access = req.body.access;
+
+    path  = "/" + email + path ;
+
+    if(type == "File"){
+        var query = {
+            filePath: path,
+            fileName: folderOrFileName,
+            owner: email
+        }
+
+        fileModel.findOneAndUpdate(query, {access: access}, function(error, response){
+            console.log(response)
+        })
+    }else{
+
+        var folderPath = path + folderOrFileName + "/";
+
+        var query = {
+            $or: [
+                { folderPath: path, folderPath: folderPath },
+            ],
+            owner: email
+        }
+        console.log(path)
+
+        FolderModel.updateMany(query, {access: access}, function(error, response){
+            if(error){
+                return res.status(500).json({
+                    message: "Internal Server Error"
+                });
+            }else{
+                var query = {
+                    owner: email,
+                    filePath: path
+                }
+
+                fileModel.updateMany(query, {access: access}, function(error, responseFounde) {
+                    if(error){
+                        
+                    }else{
+                        return res.status(200).json({
+                            message: "Permission Changed"
+                        })
+                    }
+                })
+            }
+        })
+    }
+
 }

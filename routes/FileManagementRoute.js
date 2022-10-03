@@ -41,5 +41,7 @@ router.post("/uploadFile",middleWare,upload.array('files'),FileHandlerService.up
 
 router.post("/moveFiles",middleWare,FileHandlerService.moveFiles);
 
+router.post("/changePermission",middleWare,FileHandlerService.changePermission);
+
 
 module.exports = router;

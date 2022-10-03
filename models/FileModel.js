@@ -11,9 +11,9 @@ const fileSchema = new mongoose.Schema({
     filePath : {
         type: String
     },
-    access : {
+    access : [{
         type: String
-    },
+    }],
     created_at: {
         type: Date
     },
